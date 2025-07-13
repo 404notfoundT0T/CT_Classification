@@ -40,8 +40,8 @@ The Shenzhen Chest X-ray Set is a tuberculosis digital imaging dataset created b
 - 🔹 **Related Publication**: [NIH Article on PMC](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4256233/)
 
 
-
-## Image Preprocessing
+## Model Construction
+### Image Preprocessing
 
 - Supports multiple preprocessing modes, including:
 - CLAHE (Contrast Limited Adaptive Histogram Equalization)
@@ -55,31 +55,31 @@ The Shenzhen Chest X-ray Set is a tuberculosis digital imaging dataset created b
 - Applies the selected preprocessing method
 - Outputs processed images used for training and validation
 
-## Classification Model
+### Classification Model
 
 - Uses torchvision’s pretrained `resnet34` model
 - Modified first convolutional layer to accept single-channel grayscale images
 - Output layer adjusted for 2-class classification
 
-## Run The Model
+### Run The Model
 
-### 1. Preprocess images
+#### 1. Preprocess images
 
 ```bash
 python preprocess_images.py --input_dir data/raw --output_dir data/processed_clahe --mode clahe
 ```
 Available modes: `clahe`, `gaussian`, `sharpen`, `antialias`,` none`
 
-### 2. Train the model
+#### 2. Train the model
 
 ```bash
 python train.py --data_dir data/processed_clahe --batch_size 32 --epochs 10 --lr 0.0001
 ```
-## Evaluation Metrics
+### Evaluation Metrics
 - Training and validation loss and accuracy
 - Validation precision, recall, and F1-score
 
-## Model Dependencies
+### Model Dependencies
 - Python 3.7+
 - PyTorch
 - torchvision
