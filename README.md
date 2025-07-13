@@ -79,7 +79,7 @@ python train.py --data_dir data/processed_clahe --batch_size 32 --epochs 10 --lr
 - Training and validation loss and accuracy
 - Validation precision, recall, and F1-score
 
-### Model Dependencies
+## Environment Dependencies
 - Python 3.7+
 - PyTorch
 - torchvision
