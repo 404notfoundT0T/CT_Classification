@@ -26,9 +26,9 @@ def apply_preprocessing(img, mode='clahe', image_size=(224, 224)):
                            [0, -1, 0]])
         img = cv2.filter2D(img, -1, kernel)
     elif mode == 'none':
-        pass  # 仅 resize
+        pass  
     elif mode == 'antialias':
-        pass  # 已在 resize 中处理
+        pass 
     else:
         raise ValueError(f"Unsupported preprocessing mode: {mode}")
 
@@ -67,7 +67,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--input_dir', type=str, default='data/raw')
     parser.add_argument('--output_dir', type=str, default='data/processed')
-    parser.add_argument('--mode', type=str, default='clahe', choices=['clahe', 'gaussian', 'sharpen', 'none', 'antialias'],
+    parser.add_argument('--mode', type=str, default='none', choices=['clahe', 'gaussian', 'sharpen', 'clahe', 'antialias'],
                         help='预处理方式')
     args = parser.parse_args()
 

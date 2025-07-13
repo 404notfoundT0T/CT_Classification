@@ -7,7 +7,6 @@ from dataset import ChestXrayDataset
 from sklearn.metrics import precision_score, recall_score, f1_score
 
 
-
 def train_one_epoch(model, dataloader, criterion, optimizer, device):
     model.train()
     running_loss = 0
@@ -60,8 +59,6 @@ def validate(model, dataloader, criterion, device):
 
     epoch_loss = running_loss / total
     epoch_acc = correct / total
-
-    # 新增指标
     precision = precision_score(all_labels, all_preds, zero_division=0)
     recall = recall_score(all_labels, all_preds, zero_division=0)
     f1 = f1_score(all_labels, all_preds, zero_division=0)
@@ -73,7 +70,7 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default='data/processed_clahe')
+    parser.add_argument('--data_dir', type=str, default='data/processed')
     parser.add_argument('--batch_size', type=int, default=32)
     parser.add_argument('--epochs', type=int, default=10)
     parser.add_argument('--lr', type=float, default=1e-4)
@@ -108,18 +105,6 @@ if __name__ == '__main__':
 
     model.fc = nn.Linear(model.fc.in_features, 2)
     model = model.to(device)
-
-    # model = models.mobilenet_v2(pretrained=True)
-
-    # weight_rgb = model.features[0][0].weight.data
-    # weight_gray = weight_rgb.mean(dim=1, keepdim=True)
-    # model.features[0][0] = nn.Conv2d(1, 32, kernel_size=3, stride=2, padding=1, bias=False)
-    # model.features[0][0].weight.data = weight_gray
-
-    # model.classifier[1] = nn.Linear(model.last_channel, 2)
-
-    model = model.to(device)
-
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 

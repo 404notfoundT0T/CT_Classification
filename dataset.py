@@ -5,13 +5,6 @@ from torchvision import transforms
 
 class ChestXrayDataset(Dataset):
     def __init__(self, root_dir, transform=None):
-        """
-        root_dir: 预处理后数据根目录，结构：
-            root_dir/
-                normal/
-                abnormal/
-        transform: torchvision.transforms 用于图像增强或预处理
-        """
         self.root_dir = root_dir
         self.transform = transform
 
