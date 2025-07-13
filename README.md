@@ -94,7 +94,7 @@ python train.py --data_dir data/processed_clahe --batch_size 32 --epochs 10 --lr
 ├── train.py                # Training script
 ├── data/                   # Data directory
 │   ├── raw/                # Raw images
-│   └── processed_clahe/    # Processed images
+│   └── processed_X/    # Processed images
 ```
 ## Contact
 - Please contact the author if you have any questions.
