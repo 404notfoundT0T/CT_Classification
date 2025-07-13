@@ -43,5 +43,5 @@ Available modes: `clahe`, `gaussian`, `sharpen`, `antialias`,` none`
 python train.py --data_dir data/processed_clahe --batch_size 32 --epochs 10 --lr 0.0001
 ```
 ## Evaluation Metrics
--Training and validation loss and accuracy
--Validation precision, recall, and F1-score
+- Training and validation loss and accuracy
+- Validation precision, recall, and F1-score
