@@ -28,7 +28,7 @@ This project performs binary classification (normal vs abnormal) on chest CT (or
 - Modified first convolutional layer to accept single-channel grayscale images
 - Output layer adjusted for 2-class classification
 
-## Usage
+## Run The Model
 
 ### 1. Preprocess images
 
