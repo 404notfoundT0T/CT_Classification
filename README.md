@@ -53,3 +53,13 @@ python train.py --data_dir data/processed_clahe --batch_size 32 --epochs 10 --lr
 - scikit-learn
 - OpenCV (cv2)
 - Pillow (PIL)
+
+## Project Structure
+```bash
+├── dataset.py              # Dataset class
+├── preprocess_images.py    # Image preprocessing script
+├── train.py                # Training script
+├── data/                   # Data directory
+│   ├── raw/                # Raw images
+│   └── processed_clahe/    # Processed images
+```
