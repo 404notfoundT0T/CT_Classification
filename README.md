@@ -35,4 +35,5 @@ This project performs binary classification (normal vs abnormal) on chest CT (or
 ```bash
 python preprocess_images.py --input_dir data/raw --output_dir data/processed_clahe --mode clahe
 ```
+Available modes: `clahe`, `gaussian`, `sharpen`, `antialias`,` none`
 
