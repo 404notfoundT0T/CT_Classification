@@ -2,11 +2,44 @@
 
 This project performs binary classification (normal vs abnormal) on chest CT (or X-ray) images using PyTorch and transfer learning with ResNet34.
 
-## Dataset
+## 📂 Dataset
 
-- The dataset consists of chest X-ray images divided into two classes:
-  - `normal`
-  - `abnormal`
+This project utilizes the **Shenzhen Chest X-ray Set**, a publicly available dataset designed for tuberculosis diagnosis using chest radiographs.
+
+### 📌 Dataset Overview
+
+The Shenzhen Chest X-ray Set is a tuberculosis digital imaging dataset created by the **Lister Hill National Center for Biomedical Communications (LHNCBC)** at the **U.S. National Library of Medicine (NLM)** in collaboration with the **Third People's Hospital of Shenzhen** and **Guangdong Medical College** in China.
+
+- 📸 **Total Images**: 662 chest X-ray images  
+- 🧍 **Normal Cases**: 326  
+- ⚠️ **Abnormal (TB) Cases**: 336  
+- 🖼️ **Image Format**: PNG  
+- 📐 **Resolution**: Up to 3000×3000  
+- 📄 **Clinical Info**: Accompanying `.txt` files include age, gender, and diagnostic remarks  
+
+> This dataset has been de-identified and is exempt from IRB (Institutional Review Board) review.
+
+---
+
+### 📈 Meta Statistics
+
+| Property           | Value                                      |
+|--------------------|--------------------------------------------|
+| Total samples      | 662                                        |
+| Abnormal rate      | 336 / 662 ≈ 50.75%                         |
+| Image resolution   | Min: (1130, 948); Max: (3001, 3001); Median: ~2730×2940 |
+| Format             | PNG images + TXT clinical data             |
+| Size               | ~3.6 GB                                    |
+
+---
+
+### 🔗 Dataset Links
+
+- 🔹 **Official Site**: [LHNCBC TB Image Data Sets](https://lhncbc.nlm.nih.gov/LHC-downloads/downloads.html#tuberculosis-image-data-sets)  
+- 🔹 **Download ZIP**: [ChinaSet_AllFiles.zip](https://openi.nlm.nih.gov/imgs/collections/ChinaSet_AllFiles.zip)  
+- 🔹 **Related Publication**: [NIH Article on PMC](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4256233/)
+
+
 
 ## Image Preprocessing
 
