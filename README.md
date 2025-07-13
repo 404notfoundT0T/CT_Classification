@@ -37,3 +37,9 @@ python preprocess_images.py --input_dir data/raw --output_dir data/processed_cla
 ```
 Available modes: `clahe`, `gaussian`, `sharpen`, `antialias`,` none`
 
+### 2. Train the model
+
+```bash
+python train.py --data_dir data/processed_clahe --batch_size 32 --epochs 10 --lr 0.0001
+```
+
