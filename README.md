@@ -97,5 +97,5 @@ python train.py --data_dir data/processed_clahe --batch_size 32 --epochs 10 --lr
 │   └── processed_X/    # Processed images
 ```
 ## Contact
-- Please contact the author if you have any questions.
+- Feel Free to contact the author if you have any questions.
   
