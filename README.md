@@ -1,6 +1,6 @@
 # CT Classification
 
-This project performs binary classification (normal vs abnormal) on chest CT (or X-ray) images using PyTorch and transfer learning with ResNet34.
+This project is designed for `​​ECE 4513 (Image Processing and Computer Vision)`​​ and implements a ​​binary classification system​​ to distinguish between ​​normal and abnormal chest CT/X-ray images​​ using ​​PyTorch​​ and ​​transfer learning​​ with ​​ResNet34​​.
 
 ## 📂 Dataset
 
