@@ -85,7 +85,7 @@ We provide three specialized preprocessing methods for medical images:
 
 
 
-## Model Architecture
+## Classification Model Architecture
 
 ### Core Components
 - **Backbone**: Pretrained ResNet-34 model
