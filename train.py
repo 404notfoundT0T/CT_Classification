@@ -5,7 +5,19 @@ from torchvision import  transforms
 from torchvision.models import resnet34, ResNet34_Weights
 from dataset import ChestXrayDataset  
 from sklearn.metrics import precision_score, recall_score, f1_score
+import argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--input_dir', type=str, default='data/raw')
+parser.add_argument('--output_dir', type=str, default='data/processed')
+parser.add_argument('--mode', type=str, default='none',
+                    choices=['none', 'spatial', 'frequency'],  
+                    help='预处理模式: none-原始基准, spatial-空间域去噪, frequency-频域去噪')
+parser.add_argument('--data_dir', type=str, default='data/processed_none')
+parser.add_argument('--batch_size', type=int, default=32)
+parser.add_argument('--epochs', type=int, default=100)
+parser.add_argument('--lr', type=float, default=1e-4)
+args = parser.parse_args()
 
 def train_one_epoch(model, dataloader, criterion, optimizer, device):
     model.train()
@@ -16,7 +28,6 @@ def train_one_epoch(model, dataloader, criterion, optimizer, device):
     for images, labels in dataloader:
         images = images.to(device)
         labels = labels.to(device)
-
         optimizer.zero_grad()
         outputs = model(images)
         loss = criterion(outputs, labels)
@@ -67,16 +78,8 @@ def validate(model, dataloader, criterion, device):
 
 
 if __name__ == '__main__':
-    import argparse
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default='data/processed')
-    parser.add_argument('--batch_size', type=int, default=32)
-    parser.add_argument('--epochs', type=int, default=10)
-    parser.add_argument('--lr', type=float, default=1e-4)
-    args = parser.parse_args()
-
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cuda')
 
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
@@ -121,5 +124,5 @@ if __name__ == '__main__':
 
         if val_acc > best_val_acc:
             best_val_acc = val_acc
-            torch.save(model.state_dict(), 'best_mobilenetv2.pth')
+            torch.save(model.state_dict(), 'best_resnet34.pth')
             print('保存最优模型\n')
