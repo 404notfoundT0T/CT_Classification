@@ -40,20 +40,32 @@ The Shenzhen Chest X-ray Set is a tuberculosis digital imaging dataset created b
 - 🔹 **Related Publication**: [NIH Article on PMC](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4256233/)
 
 
-## Model Construction
-### Image Preprocessing
 
-- Supports multiple preprocessing modes, including:
-- CLAHE (Contrast Limited Adaptive Histogram Equalization)
-- Gaussian blur
-- Sharpening
-- Antialiasing resize
-- None (no preprocessing)
+## Image Preprocessing
 
-- Preprocessing script: `preprocess_images.py`
-- Takes raw images as input
-- Applies the selected preprocessing method
-- Outputs processed images used for training and validation
+We provide three specialized preprocessing methods for medical images:
+
+### 1. None (Baseline)
+- **Method**: Raw images with only resizing
+- **Characteristics**:
+  - Preserves original image data
+  - Fastest processing
+  - Establishes baseline performance
+
+### 2. Spatial Domain Processing 
+- **Method**: Bilateral filtering
+- **Key Features**:
+  - Edge-preserving noise reduction
+  - Maintains structural boundaries
+  - Computationally efficient
+
+### 3. Frequency Domain Processing
+- **Method**: Wavelet threshold denoising
+- **Key Features**:
+  - Multi-scale noise removal
+  - Adaptive thresholding
+  - Preserves fine details
+
 
 ### Classification Model
 
