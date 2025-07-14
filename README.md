@@ -67,11 +67,18 @@ We provide three specialized preprocessing methods for medical images:
   - Preserves fine details
 
 
-### Classification Model
+## Model Architecture
 
-- Uses torchvision’s pretrained `resnet34` model
-- Modified first convolutional layer to accept single-channel grayscale images
-- Output layer adjusted for 2-class classification
+### Core Components
+- **Backbone**: Pretrained ResNet-34 model
+- **Adaptations**:
+  - Modified input layer for grayscale medical images
+  - Custom binary classification head (Normal/Abnormal)
+  
+### Training Configuration
+- **Optimization**: Adam optimizer (1e-4 learning rate)
+- **Regularization**: Cross-entropy loss with weight decay
+- **Augmentations**: Random flips and normalization
 
 ### Run The Model
 
