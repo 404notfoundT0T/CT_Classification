@@ -80,16 +80,16 @@ We provide three specialized preprocessing methods for medical images:
 - **Regularization**: Cross-entropy loss with weight decay
 - **Augmentations**: Random flips and normalization
 
-### Run The Model
+## Run The Model
 
-#### 1. Preprocess images
+### 1. Preprocess images
 
 ```bash
 python preprocess_images.py --input_dir data/raw --output_dir data/processed_clahe --mode clahe
 ```
 Available modes: `spatial`, `frequency`,` none`
 
-#### 2. Train the model
+### 2. Train the model
 
 ```bash
 python train.py --data_dir data/processed_clahe --batch_size 32 --epochs 10 --lr 0.0001
