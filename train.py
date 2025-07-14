@@ -1,3 +1,4 @@
+#train.py
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -17,6 +18,8 @@ parser.add_argument('--data_dir', type=str, default='data/processed_none')
 parser.add_argument('--batch_size', type=int, default=32)
 parser.add_argument('--epochs', type=int, default=100)
 parser.add_argument('--lr', type=float, default=1e-4)
+parser.add_argument('--gan_path', type=str, default='pretrained/denoise_gan.pth',
+                    help='Path to pretrained GAN model')
 args = parser.parse_args()
 
 def train_one_epoch(model, dataloader, criterion, optimizer, device):
