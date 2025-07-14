@@ -87,7 +87,7 @@ We provide three specialized preprocessing methods for medical images:
 ```bash
 python preprocess_images.py --input_dir data/raw --output_dir data/processed_clahe --mode clahe
 ```
-Available modes: `clahe`, `gaussian`, `sharpen`, `antialias`,` none`
+Available modes: `spatial`, `frequency`,` none`
 
 #### 2. Train the model
 
