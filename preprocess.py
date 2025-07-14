@@ -1,3 +1,4 @@
+#preprocess.py
 import os
 import cv2
 import argparse
@@ -9,7 +10,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--input_dir', type=str, default='data/raw')
 parser.add_argument('--output_dir', type=str, default='data/processed')
 parser.add_argument('--mode', type=str, default='none',
-                    choices=['none', 'spatial', 'frequency'],  
+                    choices=['none', 'spatial', 'frequency','bayesian'],  
                     help='预处理模式: none-原始基准, spatial-空间域去噪, frequency-频域去噪')
 parser.add_argument('--data_dir', type=str, default='data/processed_none')
 parser.add_argument('--batch_size', type=int, default=32)
@@ -21,6 +22,43 @@ def resize_with_antialiasing(img, size=(224, 224)):
     pil_img = Image.fromarray(img)
     pil_img = pil_img.resize(size, Image.LANCZOS)
     return np.array(pil_img)
+
+def bayes_thresh(detail_coeff):
+    n = detail_coeff.size
+    if n < 20:  
+        return 0.1
+    sorted_coeff = np.sort(np.abs(detail_coeff.flatten()))
+    sigma = np.median(sorted_coeff[-n//20:]) / 0.6745
+    return sigma * np.sqrt(2 * np.log(n))
+
+def bayesian_wavelet_denoise(img, wavelet='bior3.3', level=4):
+    """
+    基于贝叶斯估计的自适应小波去噪
+    参数：
+        img: 输入灰度图像(0-255)
+        wavelet: 使用的小波基，推荐'bior3.3'或'sym4'
+        level: 小波分解层数(3-5)
+    返回：
+        去噪后的图像(0-255)
+    """
+    img_float = img.astype(np.float32) / 255.0
+    
+    coeffs = pywt.wavedec2(img_float, wavelet, level=level)
+    
+    new_coeffs = [coeffs[0]] 
+    for i in range(1, len(coeffs)):
+        threshold = bayes_thresh(coeffs[i][0])
+        
+        processed_detail = tuple(
+            pywt.threshold(c, value=threshold, mode='soft') 
+            for c in coeffs[i]
+        )
+        new_coeffs.append(processed_detail)
+    
+    denoised = pywt.waverec2(new_coeffs, wavelet)
+    
+    denoised = np.clip(denoised, 0, 1) * 255
+    return denoised.astype(np.uint8)
 
 def apply_preprocessing(img,mode=args.mode, image_size=(224, 224)):
     img = cv2.resize(img, image_size)
@@ -43,7 +81,7 @@ def apply_preprocessing(img,mode=args.mode, image_size=(224, 224)):
             sigma = np.median(np.abs(coeff)) / 0.6745
             return sigma * np.sqrt(2 * np.log(len(coeff)))
     
-        new_coeffs = [coeffs[0]]  # 保留近似系数
+        new_coeffs = [coeffs[0]]  
         for i, detail in enumerate(coeffs[1:]):
             fixed_thresh = level_thresholds[i]
             adaptive_thresh = adaptive_threshold(detail[0])
@@ -59,6 +97,10 @@ def apply_preprocessing(img,mode=args.mode, image_size=(224, 224)):
         img = np.clip(img, 0, 255).astype(np.uint8)
     
         img = cv2.equalizeHist(img)
+
+    if mode == 'bayesian_wavelet':
+        img = bayesian_wavelet_denoise(img)
+        img = cv2.equalizeHist(img) 
 
     return img
 
