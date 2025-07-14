@@ -2,22 +2,17 @@ import os
 from PIL import Image
 from torch.utils.data import Dataset
 from torchvision import transforms
+import cv2
+from preprocess import apply_preprocessing
 
 class ChestXrayDataset(Dataset):
-    def __init__(self, root_dir, transform=None):
-        """
-        root_dir: 预处理后数据根目录，结构：
-            root_dir/
-                normal/
-                abnormal/
-        transform: torchvision.transforms 用于图像增强或预处理
-        """
+    def __init__(self, root_dir, transform=None, mode='none'):
         self.root_dir = root_dir
         self.transform = transform
-
         self.samples = []  
+        self.mode = mode
 
-        for label, subdir in enumerate(['normal', 'abnormal']):
+        for label, subdir in enumerate(['Normal', 'Abnormal']):
             subdir_path = os.path.join(root_dir, subdir)
             if not os.path.exists(subdir_path):
                 continue
@@ -30,9 +25,10 @@ class ChestXrayDataset(Dataset):
 
     def __getitem__(self, idx):
         img_path, label = self.samples[idx]
-        image = Image.open(img_path).convert('L')  
+        img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+        img = apply_preprocessing(img, mode=self.mode)  
 
         if self.transform:
-            image = self.transform(image)
+            img = self.transform(Image.fromarray(img)) 
 
-        return image, label
+        return img, label
