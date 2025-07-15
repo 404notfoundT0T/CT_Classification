@@ -93,6 +93,17 @@ The system employs a novel two-stage architecture:
 - Retained pretrained weights from ImageNet
 - Custom binary classification head
 
+## 🛠️ Key Components
+
+### 1.Feature Extraction Module
+​​- Hierarchical feature learning​​ through progressive downsampling
+​​- Instance normalization​​ for contrast invariance
+​​- Spatial attention gate​​ for adaptive feature refinement
+### 2.Classification Module
+- ​​Differential learning rates​​ for each component
+​​- Focal loss​​ for handling class imbalance
+​​- Early stopping​​ with configurable patience
+
 ## Run The Model
 
 ### 1. Preprocess images
