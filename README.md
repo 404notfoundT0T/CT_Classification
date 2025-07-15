@@ -1,6 +1,6 @@
 # BayUR34-- a Chest X-ray Image Classification Model
 
-This project is designed for `​​ECE 4513 (Image Processing and Computer Vision)`​​ and implements a ​​binary classification system​​ to distinguish between ​​normal and abnormal chest X-ray images​​ using ​​PyTorch​​ and ​​transfer learning​​ with ​​ResNet34​​.
+This repository contains a hybrid deep learning model for medical image classification, combining a UNet-based feature extractor with a ResNet34 classifier. The system is designed for binary classification of chest X-ray/CT images (Normal vs. Abnormal) with enhanced feature extraction capabilities.
 
 ## 📂 Dataset
 
@@ -38,7 +38,6 @@ The Shenzhen Chest X-ray Set is a tuberculosis digital imaging dataset created b
 - 🔹 **Official Site**: [LHNCBC TB Image Data Sets](https://lhncbc.nlm.nih.gov/LHC-downloads/downloads.html#tuberculosis-image-data-sets)  
 - 🔹 **Download ZIP**: [ChinaSet_AllFiles.zip](https://openi.nlm.nih.gov/imgs/collections/ChinaSet_AllFiles.zip)  
 - 🔹 **Related Publication**: [NIH Article on PMC](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4256233/)
-
 
 
 ## Image Preprocessing
@@ -83,15 +82,17 @@ We provide three specialized preprocessing methods for medical images:
 | `level`          | 4             | Decomposition levels                 |
 | `threshold_mode` | `soft`        | Thresholding method (soft/hard)      |
 
+## 🏗️ Architecture Design
+The system employs a novel two-stage architecture:
+### ​​UNet Encoder with Attention​​：
+- Lightweight encoder with 3 convolutional blocks
+- Integrated attention mechanism
+- Outputs 128-channel feature maps at 1/4 resolution
+### ​​Adapted ResNet34 Classifier​​
+- Modified input layer to accept UNet features
+- Retained pretrained weights from ImageNet
+- Custom binary classification head
 
-
-## Classification Model Architecture
-
-### Core Components
-- **Backbone**: Pretrained ResNet-34 model
-- **Adaptations**:
-  - Modified input layer for grayscale medical images
-  - Custom binary classification head (Normal/Abnormal)
   
 ### Training Configuration
 - **Optimization**: Adam optimizer (1e-4 learning rate)
