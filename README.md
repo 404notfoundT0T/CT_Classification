@@ -129,6 +129,7 @@ python train.py --data_dir data/processed_clahe --batch_size 32 --epochs 10 --lr
 ├── dataset.py              # Dataset class
 ├── preprocess_images.py    # Image preprocessing script
 ├── train.py                # Training script
+├── model.py                # Structure of the classification model
 ├── data/                   # Data directory
 │   ├── raw/                # Raw images
 │   └── processed_X/    # Processed images
