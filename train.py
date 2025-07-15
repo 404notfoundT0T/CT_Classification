@@ -10,9 +10,10 @@ from model import UNetResNet , train_one_epoch, validate, FocalLoss
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_dir', type=str, default='data/processed_none')
-    parser.add_argument('--batch_size', type=int, default=32)
-    parser.add_argument('--epochs', type=int, default=300)
-    parser.add_argument('--lr', type=float, default=1e-4)
+    parser.add_argument('--batch_size', type=int, default=48)
+    parser.add_argument('--epochs', type=int, default=100)
+    parser.add_argument('--lr', type=float, default=2e-4)
+    parser.add_argument('--weight_decay', type=float, default=1e-5)
     args = parser.parse_args()
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -31,17 +32,14 @@ if __name__ == '__main__':
     val_loader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4)
 
     model = UNetResNet().to(device)
-    criterion = FocalLoss(gamma=2.0, alpha=0.75).to(device)  # 使用Focal Loss
+    criterion = FocalLoss(gamma=1.2,alpha=0.6).to(device)  # 使用Focal Loss
     
-    optimizer = torch.optim.Adam([
-        {'params': model.unet_encoder.parameters(), 'lr': args.lr * 2},
-        {'params': model.resnet.parameters(), 'lr': args.lr},
-        {'params': model.fc.parameters(), 'lr': args.lr * 0.5}
-    ], weight_decay=1e-4)
+    optimizer = torch.optim.Adam(
+        model.parameters(),  # 所有参数统一处理
+        lr=args.lr,         # 统一学习率
+        weight_decay=args.weight_decay  # 统一权重衰减
+    )
 
-    best_val_acc = 0
-    best_epoch = 0
-    patience = 20
     for epoch in range(args.epochs):
         train_loss, train_acc = train_one_epoch(model, train_loader, criterion, optimizer, device, epoch)
         val_metrics = validate(model, val_loader, criterion, device)
@@ -51,17 +49,4 @@ if __name__ == '__main__':
         print(f'Val   Loss: {val_metrics["loss"]:.4f} Acc: {val_metrics["acc"]:.4f}')
         print(f'Val   Precision: {val_metrics["precision"]:.4f} Recall: {val_metrics["recall"]:.4f} F1: {val_metrics["f1"]:.4f}')
 
-        if val_metrics["acc"] > best_val_acc:
-            best_val_acc = val_metrics["acc"]
-            best_epoch = epoch
-            torch.save({
-                'model_state': model.state_dict(),
-                'optimizer_state': optimizer.state_dict(),
-                'epoch': epoch,
-                'metrics': val_metrics
-            }, 'best_unet_resnet.pth')
-            print('保存最优模型\n')
-
-        if epoch - best_epoch > patience:
-            print(f"早停触发,最佳epoch: {best_epoch}")
-            break
+    
