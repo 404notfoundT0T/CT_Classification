@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torchvision.models import resnet34
 import matplotlib.pyplot as plt
 import os
@@ -140,3 +141,15 @@ def validate(model, dataloader, criterion, device):
         'f1': f1_score(all_labels, all_preds, zero_division=0)
     }
     return metrics
+
+class FocalLoss(nn.Module):
+    def __init__(self, alpha=0.75, gamma=2):
+        super().__init__()
+        self.alpha = alpha
+        self.gamma = gamma
+
+    def forward(self, inputs, targets):
+        BCE_loss = F.cross_entropy(inputs, targets, reduction='none')
+        pt = torch.exp(-BCE_loss)
+        loss = self.alpha * (1-pt)**self.gamma * BCE_loss
+        return loss.mean()
