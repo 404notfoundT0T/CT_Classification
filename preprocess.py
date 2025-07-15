@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--input_dir', type=str, default='data/raw')
 parser.add_argument('--output_dir', type=str, default='data/processed')
 parser.add_argument('--mode', type=str, default='none',
-                    choices=['none', 'spatial', 'frequency','bayesian'],  
+                    choices=['none', 'spatial', 'frequency','bayesian', 'hybrid'],  
                     help='预处理模式: none-原始基准, spatial-空间域去噪, frequency-频域去噪')
 parser.add_argument('--data_dir', type=str, default='data/processed_none')
 parser.add_argument('--batch_size', type=int, default=32)
