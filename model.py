@@ -18,7 +18,9 @@ class UNetEncoder(nn.Module):
         self.encoder3 = self._block(features*2, features*4, name="enc3")
         
         self.attention = nn.Sequential(
-            nn.Conv2d(features*4, 1, kernel_size=1),
+            nn.Conv2d(features*4, features*4//4, kernel_size=1),  
+            nn.ReLU(),
+            nn.Conv2d(features*4//4, 1, kernel_size=1),
             nn.Sigmoid()
         )
 
@@ -143,7 +145,7 @@ def validate(model, dataloader, criterion, device):
     return metrics
 
 class FocalLoss(nn.Module):
-    def __init__(self, alpha=0.75, gamma=2):
+    def __init__(self, alpha=0.8, gamma=1.5):
         super().__init__()
         self.alpha = alpha
         self.gamma = gamma
