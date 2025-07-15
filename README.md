@@ -103,14 +103,14 @@ We provide three specialized preprocessing methods for medical images:
 ### 1. Preprocess images
 
 ```bash
-python preprocess_images.py --input_dir data/raw --output_dir data/processed_clahe --mode clahe
+python preprocess_images.py --input_dir data/raw --output_dir data/processed_X --mode X
 ```
 Available modes: `bayesian`,`spatial`, `frequency`,` none`
 
 ### 2. Train the model
 
 ```bash
-python train.py --data_dir data/processed_clahe --batch_size 32 --epochs 300 --lr 0.0001
+python train.py --data_dir data/processed_X --batch_size 32 --epochs 300 --lr 0.0001
 ```
 ### Evaluation Metrics
 - Training and validation loss and accuracy
