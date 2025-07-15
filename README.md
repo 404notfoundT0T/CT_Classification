@@ -84,11 +84,11 @@ We provide three specialized preprocessing methods for medical images:
 
 ## 🏗️ Architecture Design
 The system employs a novel two-stage architecture:
-### ​​UNet Encoder with Attention​​：
+### ​​1.UNet Encoder with Attention​​：
 - Lightweight encoder with 3 convolutional blocks
 - Integrated attention mechanism
 - Outputs 128-channel feature maps at 1/4 resolution
-### ​​Adapted ResNet34 Classifier​​
+### ​​2.Adapted ResNet34 Classifier​​
 - Modified input layer to accept UNet features
 - Retained pretrained weights from ImageNet
 - Custom binary classification head
