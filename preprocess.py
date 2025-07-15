@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--input_dir', type=str, default='data/raw')
 parser.add_argument('--output_dir', type=str, default='data/processed')
 parser.add_argument('--mode', type=str, default='none',
-                    choices=['none', 'spatial', 'frequency','bayesian', 'hybrid'],  
+                    choices=['none','bayesian'],  
                     help='预处理模式: none-原始基准, spatial-空间域去噪, frequency-频域去噪')
 parser.add_argument('--data_dir', type=str, default='data/processed_none')
 parser.add_argument('--batch_size', type=int, default=32)
@@ -62,41 +62,6 @@ def bayesian_wavelet_denoise(img, wavelet='bior3.3', level=4):
 
 def apply_preprocessing(img,mode=args.mode, image_size=(224, 224)):
     img = cv2.resize(img, image_size)
-    
-    if mode == 'spatial':
-        img = cv2.bilateralFilter(
-            img, 
-            d=5, 
-            sigmaColor=25, 
-            sigmaSpace=25
-        )
-        
-    if mode == 'frequency':
-
-        coeffs = pywt.wavedec2(img, 'sym4', level=3)
-    
-        level_thresholds = [15, 10, 5]  
-    
-        def adaptive_threshold(coeff):
-            sigma = np.median(np.abs(coeff)) / 0.6745
-            return sigma * np.sqrt(2 * np.log(len(coeff)))
-    
-        new_coeffs = [coeffs[0]]  
-        for i, detail in enumerate(coeffs[1:]):
-            fixed_thresh = level_thresholds[i]
-            adaptive_thresh = adaptive_threshold(detail[0])
-            final_thresh = min(fixed_thresh, adaptive_thresh)
-            
-            processed_detail = tuple(
-                pywt.threshold(d, value=final_thresh, mode='soft')
-                for d in detail
-            )
-            new_coeffs.append(processed_detail)
-        
-        img = pywt.waverec2(new_coeffs, 'sym4')
-        img = np.clip(img, 0, 255).astype(np.uint8)
-    
-        img = cv2.equalizeHist(img)
 
     if mode == 'bayesian_wavelet':
         img = bayesian_wavelet_denoise(img)
