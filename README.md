@@ -42,7 +42,7 @@ The Shenzhen Chest X-ray Set is a tuberculosis digital imaging dataset created b
 
 ## Image Preprocessing
 
-We provide three specialized preprocessing methods for medical images:
+We provide bayesian Wavelet Denosing preprocessing methods for medical images:
 
 ### 0. None (Baseline)
 - **Method**: Raw images with only resizing
@@ -51,21 +51,7 @@ We provide three specialized preprocessing methods for medical images:
   - Fastest processing
   - Establishes baseline performance
 
-### 1. Spatial Domain Processing 
-- **Method**: Bilateral filtering
-- **Key Features**:
-  - Edge-preserving noise reduction
-  - Maintains structural boundaries
-  - Computationally efficient
-
-### 2. Frequency Domain Processing
-- **Method**: Wavelet threshold denoising
-- **Key Features**:
-  - Multi-scale noise removal
-  - Adaptive thresholding
-  - Preserves fine details
-
-### 3. Bayesian Wavelet Denoising
+### 1. Bayesian Wavelet Denoising
 - **Method**: Adaptive wavelet thresholding with Bayesian estimation
 - **Key Features**:
 - Automatic threshold calculation（Uses Bayesian statistics to determine optimal thresholds）
