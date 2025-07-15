@@ -87,7 +87,7 @@ The system employs a novel two-stage architecture:
 ```bash
 python preprocess_images.py --input_dir data/raw --output_dir data/processed_X --mode X
 ```
-Available modes: `bayesian`,`spatial`, `frequency`,` none`
+Available modes: `bayesian`,` none`
 
 ### 2. Train the model
 
