@@ -10,10 +10,10 @@ from model import UNetResNet , train_one_epoch, validate, FocalLoss
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_dir', type=str, default='data/processed_none')
-    parser.add_argument('--batch_size', type=int, default=48)
-    parser.add_argument('--epochs', type=int, default=100)
+    parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--epochs', type=int, default=500)
     parser.add_argument('--lr', type=float, default=2e-4)
-    parser.add_argument('--weight_decay', type=float, default=1e-5)
+    parser.add_argument('--weight_decay', type=float, default=2e-5)
     args = parser.parse_args()
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     val_loader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4)
 
     model = UNetResNet().to(device)
-    criterion = FocalLoss(gamma=1.2,alpha=0.6).to(device)  # 使用Focal Loss
+    criterion = FocalLoss(gamma=1.5,alpha=0.8).to(device)  # 使用Focal Loss
     
     optimizer = torch.optim.Adam(
         model.parameters(),  # 所有参数统一处理
