@@ -4,7 +4,8 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from torchvision import transforms
 from dataset import ChestXrayDataset
-from model import UNetResNet , train_one_epoch, validate
+from model import UNetResNet , train_one_epoch, validate, FocalLoss
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -30,7 +31,7 @@ if __name__ == '__main__':
     val_loader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4)
 
     model = UNetResNet().to(device)
-    criterion = nn.CrossEntropyLoss()
+    criterion = FocalLoss(gamma=2.0, alpha=0.75).to(device)  # 使用Focal Loss
     
     optimizer = torch.optim.Adam([
         {'params': model.unet_encoder.parameters(), 'lr': args.lr * 2},
@@ -39,6 +40,8 @@ if __name__ == '__main__':
     ], weight_decay=1e-4)
 
     best_val_acc = 0
+    best_epoch = 0
+    patience = 20
     for epoch in range(args.epochs):
         train_loss, train_acc = train_one_epoch(model, train_loader, criterion, optimizer, device, epoch)
         val_metrics = validate(model, val_loader, criterion, device)
@@ -50,6 +53,7 @@ if __name__ == '__main__':
 
         if val_metrics["acc"] > best_val_acc:
             best_val_acc = val_metrics["acc"]
+            best_epoch = epoch
             torch.save({
                 'model_state': model.state_dict(),
                 'optimizer_state': optimizer.state_dict(),
@@ -57,3 +61,7 @@ if __name__ == '__main__':
                 'metrics': val_metrics
             }, 'best_unet_resnet.pth')
             print('保存最优模型\n')
+
+        if epoch - best_epoch > patience:
+            print(f"早停触发,最佳epoch: {best_epoch}")
+            break
