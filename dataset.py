@@ -16,7 +16,7 @@ parser.add_argument('--mode', type=str, default='none',
 parser.add_argument('--data_dir', type=str, default='data/processed_none')
 parser.add_argument('--batch_size', type=int, default=32)
 parser.add_argument('--epochs', type=int, default=10)
-parser.add_argument('--lr', type=float, default=1e-4)
+parser.add_argument('--lr', type=float, default=2e-4)
 args = parser.parse_args()
 
 class ChestXrayDataset(Dataset):
