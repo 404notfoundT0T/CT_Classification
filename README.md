@@ -40,18 +40,8 @@ The Shenzhen Chest X-ray Set is a tuberculosis digital imaging dataset created b
 - 🔹 **Related Publication**: [NIH Article on PMC](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4256233/)
 
 
-## Image Preprocessing
+## Image Preprocessing -- Bayesian Wavelet Denoising
 
-We provide bayesian Wavelet Denosing preprocessing methods for medical images:
-
-### 0. None (Baseline)
-- **Method**: Raw images with only resizing
-- **Characteristics**:
-  - Preserves original image data
-  - Fastest processing
-  - Establishes baseline performance
-
-### 1. Bayesian Wavelet Denoising
 - **Method**: Adaptive wavelet thresholding with Bayesian estimation
 - **Key Features**:
 - Automatic threshold calculation（Uses Bayesian statistics to determine optimal thresholds）
@@ -61,7 +51,7 @@ We provide bayesian Wavelet Denosing preprocessing methods for medical images:
   - `bior3.3` (Biorthogonal 3.3)
   - `sym4` (Symlet 4)
 
-#### Technical Specifications
+### Technical Specifications
 | Parameter        | Default Value | Description                          |
 |------------------|---------------|--------------------------------------|
 | `wavelet`        | `bior3.3`     | Wavelet basis function               |
