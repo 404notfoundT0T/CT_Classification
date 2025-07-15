@@ -93,12 +93,6 @@ The system employs a novel two-stage architecture:
 - Retained pretrained weights from ImageNet
 - Custom binary classification head
 
-  
-### Training Configuration
-- **Optimization**: Adam optimizer (1e-4 learning rate)
-- **Regularization**: Cross-entropy loss with weight decay
-- **Augmentations**: Random flips and normalization
-
 ## Run The Model
 
 ### 1. Preprocess images
