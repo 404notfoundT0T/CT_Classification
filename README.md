@@ -25,7 +25,7 @@ The Shenzhen Chest X-ray Set is a tuberculosis digital imaging dataset created b
 
 | Property           | Value                                      |
 |--------------------|--------------------------------------------|
-| Total samples      | 662                                        |
+| Total samples      | 662 (Normal 326;Abnormal 336)       |
 | Abnormal rate      | 336 / 662 ≈ 50.75%                         |
 | Image resolution   | Min: (1130, 948); Max: (3001, 3001); Median: ~2730×2940 |
 | Format             | PNG images + TXT clinical data             |
