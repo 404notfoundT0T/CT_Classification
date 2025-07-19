@@ -33,6 +33,13 @@ The Shenzhen Chest X-ray Set is a tuberculosis digital imaging dataset created b
 
 ---
 
+| Preprocessing Method | Accuracy (ACC) | Precision (Pre) | Recall (Rec) | F1 Score |
+|----------------------|---------------|----------------|--------------|---------|
+| None (Baseline)      | 0.8195        | 0.8243         | 0.8472       | 0.8356  |
+| Spatial              | 0.8346        | 0.8235         | 0.8485       | 0.8358  |
+| Frequency            | 0.8496        | 0.8548         | 0.8281       | 0.8413  |
+| **Bayesian**         | **0.9023**    | **0.9155**     | **0.9028**   | **0.9091** |
+
 ### 🔗 Dataset Links
 
 - 🔹 **Official Site**: [LHNCBC TB Image Data Sets](https://lhncbc.nlm.nih.gov/LHC-downloads/downloads.html#tuberculosis-image-data-sets)  
